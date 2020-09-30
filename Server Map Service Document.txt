@@ -1,0 +1,9 @@
+select 
+Name,
+Folder,
+MXD as 'Document',
+ClientName
+from Service
+where EnvironmentId = [SERVER]
+and Type = 'MapServer'
+and Latest = 1

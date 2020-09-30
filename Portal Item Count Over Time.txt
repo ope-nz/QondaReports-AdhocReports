@@ -1,0 +1,6 @@
+select 
+strftime('%Y-%m-%d %H:%M:%S.', "period"/1000, 'unixepoch') || ("period"%1000) as Period,
+Value as 'Item Count'
+from Statistics
+where Type = 1
+and EnvironmentId = [PORTAL]

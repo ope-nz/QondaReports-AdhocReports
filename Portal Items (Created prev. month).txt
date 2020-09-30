@@ -1,0 +1,6 @@
+select title as "Item Title",type as "Item Type",owner as "Owner",access as "Sharing",strftime('%Y-%m-%d', "created"/1000, 'unixepoch') as "Created"
+from PortalItem
+where latest = 1
+and environmentid = [PORTAL]
+and created > strftime('%s','now','-1 months')*1000
+order by created desc

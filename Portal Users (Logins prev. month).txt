@@ -1,0 +1,6 @@
+select username as "User Name",fullName as "Full name",strftime('%Y-%m-%d %H:%M:%S', "lastlogin"/1000, 'unixepoch') as "Last Login"
+from PortalUser
+where latest = 1
+and environmentid = [PORTAL]
+and lastlogin > strftime('%s','now','-1 months')*1000
+order by lastlogin desc

@@ -1,0 +1,9 @@
+select Title as 'Title',
+Type as 'Type',
+Owner as 'Owner',
+ItemId as 'Item Id'
+from PortalItem
+where Description is null
+and EnvironmentId = [PORTAL]
+and Latest = 1
+order by ScoreCompleteness asc

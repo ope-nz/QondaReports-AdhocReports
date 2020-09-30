@@ -1,0 +1,6 @@
+select title as Title,Type as 'Item Type',owner as "Owner", numviews as "Number of Views"
+from PortalItem
+where access = 'public'
+and Latest = 1
+and EnvironmentId = [PORTAL]
+order by title

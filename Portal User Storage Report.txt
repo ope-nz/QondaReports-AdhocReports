@@ -1,0 +1,5 @@
+select fullName as "Full Name", username as "User Name", Round(storageusage/1024.0/1024.0,3) as "Storage (Mb)" from PortalUser
+where storageusage > 0
+and latest = 1
+and EnvironmentId = [PORTAL]
+order by fullName

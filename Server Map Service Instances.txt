@@ -1,0 +1,6 @@
+select FullName,MinInstances,MaxInstances
+from Service
+where latest = 1 
+and EnvironmentId = [SERVER]
+and type = 'MapServer'
+order by FullName

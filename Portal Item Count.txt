@@ -1,0 +1,5 @@
+select e.name as "Environment",
+(select count(p0.EnvironmentId) from PortalItem p0 where Latest = 0 and EnvironmentId = e.Id) as "Previous Item Count",
+(select count(p1.EnvironmentId) from PortalItem p1 where Latest = 1 and EnvironmentId = e.Id) as "Current Item Count"
+from Environment e
+where Tier = 'PORTAL'

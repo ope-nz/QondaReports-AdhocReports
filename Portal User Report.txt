@@ -1,0 +1,4 @@
+select firstName as "First Name",lastName as "Last Name", username as "User Name", email as "Email" from PortalUser
+where latest = 1 
+and EnvironmentId = [PORTAL]
+order by firstName,LastName

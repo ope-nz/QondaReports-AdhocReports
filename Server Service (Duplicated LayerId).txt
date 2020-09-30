@@ -1,0 +1,13 @@
+select Layerid,count(Layerid) as Count,group_concat(S.Folder||'/'||S.Name||'/'||L.Name,'<br>') as ServiceLayerName
+from Layer L, Service S, Relationship R
+where L.Latest = 1
+and L.LayerType = 'Layer'
+and L.EnvironmentId = [SERVER]
+and R.FromType = 'Service' and R.ToType = 'Layer'
+and L.Id = R.ToId
+and R.Fromid = S.Id
+and S.Type = 'MapServer'
+and S.Latest = 1
+group by L.Layerid
+having count(Layerid) > 1
+order by layerId

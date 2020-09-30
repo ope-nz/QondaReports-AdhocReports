@@ -1,0 +1,32 @@
+select 
+svc.Folder,
+svc.Name,
+group_concat(distinct(svc.Type)) as [Type],
+case Max(svc.MaxInstances)
+when 0 then 'Shared'
+else 'Dedicated'
+end as [Inst. Type],
+Max(svc.MinInstances) as [Min Inst.],
+Max(svc.MaxInstances) as [Max Inst.],
+svc.MXD,
+group_concat(distinct(db.Name)) as [Database],
+group_concat(distinct(db.server)) as [Database Server],
+group_concat(distinct(wmap.Title)) as [Web Map],
+group_concat(distinct(wapp.Title)) as [Web App]
+from
+service svc,
+workspace wks,
+Relationship rel,
+Database db
+LEFT OUTER JOIN PortalItemService pis on pis.ServiceURL = svc.ServiceURL
+LEFT OUTER JOIN PortalItem wmap on wmap.ItemId = pis.PortalItemid and wmap.type='Web Map'
+LEFT OUTER JOIN PortalItem wapp on wapp.Id in (select FromId from Relationship where FromType = 'Web Mapping Application' and ToType = 'Web Map' and ToId = wmap.Id)
+where svc.environmentid = 27
+and svc.latest = 1
+and svc.id = rel.toid
+and wks.id = rel.fromid
+and wks.databaseId = db.id
+and rel.FromType = 'Workspace'
+and rel.ToType = 'Service'
+group by svc.Folder,svc.Name
+order by svc.Folder,svc.Name

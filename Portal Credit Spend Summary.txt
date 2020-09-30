@@ -1,0 +1,6 @@
+select strftime('%Y-%m-%d %H:%M:%S.', "period"/1000, 'unixepoch') || ("period"%1000) as Period,
+sum(credits) as Credits
+from creditspend
+where environmentid = [PORTAL]
+group by period
+order by period desc

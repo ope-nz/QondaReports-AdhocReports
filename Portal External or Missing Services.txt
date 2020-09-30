@@ -1,0 +1,14 @@
+select distinct p.title as Title,p.Type as 'Item Type',
+pis.Title as 'Layer Title',pis.LayerId as 'Layer Id',
+pis.LayerType as 'Layer Type',
+case LayerURL when '' then ServiceURL else LayerURL END as URL
+from PortalItemService pis, PortalItem p
+where p.Latest = 1 and pis.Latest = 1
+and p.ItemId = pis.PortalItemId
+and pis.LayerType not in ('webmap')
+and pis.LayerURL not in (select distinct LayerURL from Layer where latest = 1)
+and pis.LayerURL not in (select distinct ServiceURL from Layer where latest = 1)
+--and pis.ServiceURL not like '%services.arcgisonline.com%'
+--and pis.LayerURL not like '%services.arcgisonline.com%'
+and p.EnvironmentId = [PORTAL]
+order by p.title,pis.LayerType,pis.LayerURL

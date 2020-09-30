@@ -1,0 +1,5 @@
+Select distinct Label, ConnectionString as "Connection String"
+from Workspace
+where latest = 1
+and EnvironmentId = [SERVER]
+order by Label, ConnectionString
