@@ -1,0 +1,18 @@
+select
+distinct db.server 'Data Server',
+db.connectionproperties as 'Full Path',
+case length(sv.Folder) when 0 THEN sv.Name ELSE sv.Folder||'/'||sv.Name END as 'Service Name'
+from
+Database db,
+RelationShip db_di,
+Relationship di_sv,
+Service sv
+where db.EnvironmentId = [SERVER]
+and db.client = 'File System'
+and db.latest = 1 and  db_di.latest = 1 and  di_sv.latest = 1 and  sv.latest = 1
+and db.Id = db_di.FromId
+and db_di.FromType = 'Database' and db_di.ToType = 'DataItem'
+and db_di.ToId = di_sv.FromId
+and di_sv.FromType = 'DataItem' and di_sv.ToType = 'Service'
+and di_sv.ToId = sv.Id
+order by db.server,db.connectionproperties,'Service Name'
