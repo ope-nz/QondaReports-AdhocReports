@@ -1,0 +1,4 @@
+select FullName,InterceptorList from Service
+where length(InterceptorList) > 0
+and latest = 1 
+and environmentid = [SERVER]
