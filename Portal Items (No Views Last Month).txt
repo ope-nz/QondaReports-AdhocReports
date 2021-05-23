@@ -1,0 +1,13 @@
+select ItemId as "ItemId",Owner as "Owner",Title as "Title",
+numViews as "Views",strftime('%Y-%m-%d', "created"/1000, 'unixepoch') as "Created"
+from PortalItem
+where latest = 1
+and itemid in (
+select itemid
+from Statistics
+where type = 6
+and EnvironmentId = [PORTAL]
+and Period > strftime('%s','now','-1 months')*1000
+group by itemid
+having max(value)=avg(value)
+)
