@@ -1,0 +1,3 @@
+select Name, Tier, Role from Machine
+where EnvironmentId = [PORTAL]
+and Latest = 1
