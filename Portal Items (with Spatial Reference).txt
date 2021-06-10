@@ -1,0 +1,5 @@
+select Title, SpatialReference
+from PortalItem
+where Latest = 1
+and EnvironmentId = [PORTAL]
+and SpatialReference is not null
