@@ -1,0 +1,15 @@
+select Title,NumViews as "Views",Itemid as "Item Id",
+Owner,Type as "Item Type",Round(Size/1024.0/1024.0,1) as "Size Mb",
+strftime('%Y-%m-%d', "created"/1000, 'unixepoch') as "Created",
+strftime('%Y-%m-%d', "modified"/1000, 'unixepoch') as "Modified"
+from PortalItem
+where environmentid = [PORTAL]
+and latest = 1
+and Itemid in (
+select Itemid from Statistics
+where Type = 6
+and environmentid = [PORTAL]
+group by Itemid
+having Max(Value)-Min(Value) < 10
+)
+order by owner,type
