@@ -1,0 +1,6 @@
+select ItemId as Service,Count(Value) as "Measured Period (Days)" from Statistics
+where Type=54
+and environmentid = [SERVER]
+group by ItemId
+having Avg(Value) < 1 and Count(Value) > 14
+order by ItemId
