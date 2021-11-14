@@ -1,0 +1,13 @@
+select svc.Folder,svc.fullName as "Full Name",count(grp.Title) as "Group Count", group_concat(grp.Title) as "Groups"
+from
+Service svc,
+PortalGroup grp,
+Relationship rel1
+WHERE
+svc.latest = 1
+and grp.Latest = 1
+and rel1.Latest = 1
+and svc.PortalItemId = rel1.ToId and rel1.ToType = 'PortalItem'
+and grp.GroupId = rel1.FromId and rel1.FromType = 'Group'
+and svc.EnvironmentId = [SERVER]
+group by svc.fullName
