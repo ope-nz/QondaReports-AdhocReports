@@ -1,0 +1,11 @@
+select s.Name,s.Type as "Service Type",ServiceURL,
+r.FromType as Type,e.Name as "Environment",p.Title as Title,p.Owner as Owner,p.ItemId
+from
+Service s, Relationship r, PortalItem p, Environment e
+where s.EnvironmentId = -1
+and s.latest = 1
+and r.ToId = s.Id
+and p.Id = r.FromId
+and p.latest = 1
+and p.EnvironmentId = e.Id
+order by ServiceURL,s.Name
